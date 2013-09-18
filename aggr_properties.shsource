@@ -101,9 +101,11 @@ BRANCH_BUILD=${BRANCH_BUILD:-david_williams/testnewbuild}
 TMPDIR_BUILD=sbbuild
 BRANCH_TOOLS=david_williams/testnewbuild
 TMPDIR_TOOLS=sbtools
-BRANCH_TESTS=david_williams/testnewbuild
-TMPDIR_TESTS=sbtests
-CGITURL=http://git.eclipse.org/c/simrel
+export BRANCH_TESTS=david_williams/testnewbuild
+# if / in branch, is converted to _ in filename via wget/cgit
+export BRANCH_TESTS_FILENAME=${BRANCH_TESTS////_}
+export TMPDIR_TESTS=sbtests
+export CGITURL=http://git.eclipse.org/c/simrel
 
 # should be '/aggregate' if using "trusted repos" ... else, empty
 #AGGR=/aggregate

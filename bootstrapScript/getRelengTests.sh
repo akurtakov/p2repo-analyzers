@@ -112,7 +112,7 @@ mkdir -p "${RELENG_TESTS}"
 
 
 # remove if already exists
-rm ${BRANCH_TESTS}.zip* 2>/dev/null
+rm ${BRANCH_TESTS////_}.zip* 2>/dev/null
 rm -fr ${TMPDIR_TESTS} 2>/dev/null 
 
 wget --no-verbose -O ${BRANCH_TESTS////_}.zip ${CGITURL}/${RELENG_TESTS}.git/snapshot/${BRANCH_TESTS}.zip 2>&1
@@ -176,7 +176,7 @@ fi
 if ! $verboseFlag
 then
     # cleanup unless verbose/debugging
-    rm ${BRANCH_TESTS}.zip* 2>/dev/null
+    rm ${BRANCH_TESTS////_}.zip* 2>/dev/null
     rm -fr ${TMPDIR_TESTS} 2>/dev/null
 fi
 

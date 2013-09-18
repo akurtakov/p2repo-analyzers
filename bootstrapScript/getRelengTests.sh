@@ -18,7 +18,7 @@
 source aggr_properties.shsource 2>/dev/null
 
 RELENG_TESTS=${RELENG_TESTS:-org.eclipse.simrel.tests}
-BRANCH_TESTS=${BRANCH_TESTS:-master}
+BRANCH_TESTS=${BRANCH_TESTS:-david_williams/testnewbuild}
 TMPDIR_TESTS=${TMPDIR_TESTS:-sbtests}
 CGITURL=${CGITURL:-http://git.eclipse.org/c/simrel}
 

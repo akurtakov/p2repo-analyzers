@@ -115,7 +115,7 @@ mkdir -p "${RELENG_TESTS}"
 rm ${BRANCH_TESTS}.zip* 2>/dev/null
 rm -fr ${TMPDIR_TESTS} 2>/dev/null 
 
-wget --no-verbose -O ${BRANCH_TESTS}.zip ${CGITURL}/${RELENG_TESTS}.git/snapshot/${BRANCH_TESTS}.zip 2>&1
+wget --no-verbose -O ${BRANCH_TESTS////_}.zip ${CGITURL}/${RELENG_TESTS}.git/snapshot/${BRANCH_TESTS}.zip 2>&1
 RC=$?
 if [[ $RC != 0 ]] 
 then
@@ -131,7 +131,7 @@ then
     quietZipFlag=
 fi
 
-unzip ${quietZipFlag} -o ${BRANCH_TESTS}.zip -d ${TMPDIR_TESTS} 
+unzip ${quietZipFlag} -o ${BRANCH_TESTS////_}.zip -d ${TMPDIR_TESTS} 
 RC=$?
 if [[ $RC != 0 ]] 
 then

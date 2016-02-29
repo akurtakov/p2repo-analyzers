@@ -6,7 +6,7 @@
 	<property key="checkout.location" value="${user.home}/git/org.eclipse.cbi.p2repo.analyzers" />
 
 	<locator pattern="org.eclipse.cbi.p2repo.analyzers.buckminster" searchPathRef="local.releng" />
-	<locator pattern="^org\.eclipse\.simrel\.tests.*$" searchPathRef="local.bundles" />
+	<locator pattern="^org\.eclipse\.cbi\.p2repo.*$" searchPathRef="local.bundles" />
 	
 	<locator searchPathRef="platform" />
 

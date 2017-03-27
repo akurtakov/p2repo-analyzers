@@ -1,38 +1,121 @@
-<?xml version="1.0" encoding="UTF-8"?><?pde version="3.8"?>
-<target name="org.eclipse.cbi.p2repo.analyzers.prereqs" sequenceNumber="6">
-<locations>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.license.feature.group" version="1.0.1.v20140414-1359"/>
-<repository location="http://download.eclipse.org/cbi/updates/license/1.0.1.v20140414-1359/"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.platform.feature.group" version="4.4.2.v20150204-1700"/>
-<unit id="org.eclipse.equinox.p2.core.feature.feature.group" version="1.3.0.v20140523-0116"/>
-<unit id="org.eclipse.equinox.core.feature.feature.group" version="1.2.2.v20150203-1939"/>
-<unit id="org.eclipse.equinox.executable.feature.group" version="3.6.102.v20150204-1316"/>
-<unit id="org.eclipse.core.runtime" version="3.10.0.v20140318-2214"/>
-<unit id="org.eclipse.equinox.security.win32.x86" version="0.0.0"/>
-<unit id="org.eclipse.equinox.security.win32.x86_64" version="0.0.0"/>
-<unit id="org.eclipse.equinox.security.macosx" version="0.0.0"/>
-<repository location="http://download.eclipse.org/eclipse/updates/4.4/R-4.4.2-201502041700/"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
-<unit id="com.google.guava" version="15.0.0.v201403281430"/>
-<unit id="com.google.guava.source" version="15.0.0.v201403281430"/>
-<unit id="org.junit" version="4.11.0.v201303080030"/>
-<unit id="org.junit.source" version="4.11.0.v201303080030"/>
-<unit id="org.hamcrest.core" version="1.3.0.v201303031735"/>
-<unit id="org.hamcrest.core.source" version="1.3.0.v201303031735"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20151221205849/repository/"/>
-</location>
-<location includeAllPlatforms="true" includeConfigurePhase="false" includeMode="slicer" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.xtext.xbase.lib" version="2.8.2.v201504100559"/>
-<unit id="org.eclipse.xtext.xbase.lib.source" version="2.8.2.v201504100559"/>
-<unit id="org.eclipse.xtend.lib" version="2.8.2.v201504100559"/>
-<unit id="org.eclipse.xtend.lib.source" version="2.8.2.v201504100559"/>
-<unit id="org.eclipse.xtend.lib.macro" version="2.8.2.v201504100559"/>
-<unit id="org.eclipse.xtend.lib.macro.source" version="2.8.2.v201504100559"/>
-<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.8.2/"/>
-</location>
-</locations>
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.8"?>
+<target name="org.eclipse.cbi.p2repo.analyzers.prereqs">
+  <locations>
+
+    <!-- need "current platform" for working in workbench
+      <location path="${eclipse_home}" type="Profile"/>
+    -->
+
+    <location
+      includeAllPlatforms="false"
+      includeConfigurePhase="false"
+      includeMode="slicer"
+      includeSource="false"
+      type="InstallableUnit">
+      <unit
+        id="org.eclipse.license.feature.group"
+        version="1.0.1.v20140414-1359" />
+      <repository location="http://download.eclipse.org/cbi/updates/license/1.0.1.v20140414-1359/" />
+    </location>
+
+    <location
+      includeAllPlatforms="false"
+      includeConfigurePhase="false"
+      includeMode="slicer"
+      includeSource="false"
+      type="InstallableUnit">
+      <unit
+        id="com.google.guava"
+        version="15.0.0.v201403281430" />
+      <unit
+        id="com.google.guava.source"
+        version="15.0.0.v201403281430" />
+      <unit
+        id="org.junit"
+        version="4.12.0.v201504281640" />
+      <unit
+        id="org.junit.source"
+        version="4.12.0.v201504281640" />
+      <unit
+        id="org.hamcrest.core"
+        version="1.3.0.v201303031735" />
+      <unit
+        id="org.hamcrest.core.source"
+        version="1.3.0.v201303031735" />
+      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20160520211859/repository/" />
+    </location>
+    <location
+      includeAllPlatforms="false"
+      includeConfigurePhase="false"
+      includeMode="slicer"
+      includeSource="false"
+      type="InstallableUnit">
+      <unit
+        id="org.eclipse.xtext.xbase.lib"
+        version="2.10.0.v201605250459" />
+      <unit
+        id="org.eclipse.xtext.xbase.lib.source"
+        version="2.10.0.v201605250459" />
+      <unit
+        id="org.eclipse.xtend.lib"
+        version="2.10.0.v201605250459" />
+      <unit
+        id="org.eclipse.xtend.lib.source"
+        version="2.10.0.v201605250459" />
+      <unit
+        id="org.eclipse.xtend.lib.macro"
+        version="2.10.0.v201605250459" />
+      <unit
+        id="org.eclipse.xtend.lib.macro.source"
+        version="2.10.0.v201605250459" />
+      <repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.10.0/" />
+    </location>
+    <location
+      includeAllPlatforms="false"
+      includeConfigurePhase="false"
+      includeMode="slicer"
+      includeSource="false"
+      type="InstallableUnit">
+      <unit
+        id="org.eclipse.equinox.p2.core.feature.feature.group"
+        version="1.3.201.v20161115-1950" />
+      <unit
+        id="org.eclipse.equinox.core.feature.feature.group"
+        version="1.3.2.v20161116-1332" />
+      <unit
+        id="org.eclipse.platform.feature.group"
+        version="4.6.2.v20161124-1529" />
+      <unit
+        id="org.eclipse.equinox.executable.feature.group"
+        version="3.6.300.v20161122-1740" />
+      <unit
+        id="org.eclipse.core.runtime"
+        version="3.12.0.v20160606-1342" />
+      <unit
+        id="org.eclipse.equinox.concurrent"
+        version="1.1.0.v20130327-1442" />
+      <repository location="http://download.eclipse.org/eclipse/updates/4.6/R-4.6.2-201611241400/" />
+    </location>
+    <location
+      includeAllPlatforms="false"
+      includeConfigurePhase="false"
+      includeMode="slicer"
+      includeSource="false"
+      type="InstallableUnit">
+      <unit
+        id="org.eclipse.emf.common.feature.group"
+        version="2.12.0.v20160420-0247" />
+      <unit
+        id="org.eclipse.emf.common.source.feature.group"
+        version="2.12.0.v20160420-0247" />
+      <unit
+        id="org.eclipse.emf.ecore.feature.group"
+        version="2.12.0.v20160420-0247" />
+      <unit
+        id="org.eclipse.emf.ecore.source.feature.group"
+        version="2.12.0.v20160420-0247" />
+      <repository location="http://download.eclipse.org/modeling/emf/emf/updates/2.12/base/S201604200247/" />
+    </location>
+  </locations>
 </target>

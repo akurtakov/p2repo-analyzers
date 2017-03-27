@@ -52,16 +52,13 @@ public class SignerTest extends TestJars {
     @Override
     public void accept(final File file) {
       final PlainCheckReport checkReport = new PlainCheckReport();
-      String _name = file.getName();
-      checkReport.setFileName(_name);
+      checkReport.setFileName(file.getName());
       checkReport.setIuType(this.iuTypeName);
       File fileToCheck = file;
-      String _name_1 = fileToCheck.getName();
-      boolean _endsWith = _name_1.endsWith(PackGzFileNameFilter.EXTENSION_PACEKD_JAR);
+      boolean _endsWith = fileToCheck.getName().endsWith(PackGzFileNameFilter.EXTENSION_PACEKD_JAR);
       if (_endsWith) {
         try {
-          File _unpack200gz = BundleJarUtils.unpack200gz(fileToCheck);
-          fileToCheck = _unpack200gz;
+          fileToCheck = BundleJarUtils.unpack200gz(fileToCheck);
         } catch (final Throwable _t) {
           if (_t instanceof IOException) {
             final IOException e = (IOException)_t;
@@ -69,10 +66,10 @@ public class SignerTest extends TestJars {
             StringConcatenation _builder = new StringConcatenation();
             _builder.append("Unable to unpack ");
             String _absolutePath = file.getAbsolutePath();
-            _builder.append(_absolutePath, "");
+            _builder.append(_absolutePath);
             _builder.append(". Can not check signature. ");
             String _message = e.getMessage();
-            _builder.append(_message, "");
+            _builder.append(_message);
             checkReport.setCheckResult(_builder.toString());
             return;
           } else {
@@ -81,8 +78,7 @@ public class SignerTest extends TestJars {
         }
       }
       Properties eclipseInf = BundleJarUtils.getEclipseInf(fileToCheck);
-      String _property = eclipseInf.getProperty("jarprocessor.exclude.sign", "false");
-      Boolean _valueOf = Boolean.valueOf(_property);
+      Boolean _valueOf = Boolean.valueOf(eclipseInf.getProperty("jarprocessor.exclude.sign", "false"));
       if ((_valueOf).booleanValue()) {
         checkReport.setType(ReportType.BAD_GUY);
         checkReport.setCheckResult("Jar was excluded from signing using the eclipse.inf entry.");
@@ -92,16 +88,14 @@ public class SignerTest extends TestJars {
         final boolean verified = VerifyStep.verify(fileToCheck, errorOut, warningOut);
         if ((!verified)) {
           checkReport.setType(ReportType.NOT_IN_TRAIN);
-          String _string = errorOut.toString();
-          checkReport.setCheckResult(_string);
+          checkReport.setCheckResult(errorOut.toString());
         } else {
           String message = "jar verified";
           int _length = warningOut.length();
           boolean _greaterThan = (_length > 0);
           if (_greaterThan) {
             checkReport.setType(ReportType.INFO);
-            String _string_1 = warningOut.toString();
-            message = _string_1;
+            message = warningOut.toString();
           }
           checkReport.setCheckResult(message);
         }
@@ -150,8 +144,7 @@ public class SignerTest extends TestJars {
   public void checkJars(final File dirToCheck, final String iuType, final CopyOnWriteArraySet<PlainCheckReport> reports) {
     JARFileNameFilter _jARFileNameFilter = new JARFileNameFilter();
     PackGzFileNameFilter _packGzFileNameFilter = new PackGzFileNameFilter();
-    CompositeFileFilter _create = CompositeFileFilter.create(_jARFileNameFilter, _packGzFileNameFilter);
-    final File[] jars = dirToCheck.listFiles(_create);
+    final File[] jars = dirToCheck.listFiles(CompositeFileFilter.create(_jARFileNameFilter, _packGzFileNameFilter));
     Stream<File> _parallelStream = ((List<File>)Conversions.doWrapArray(jars)).parallelStream();
     SignerTest.SignerCheck _signerCheck = new SignerTest.SignerCheck(reports, iuType);
     _parallelStream.forEach(_signerCheck);
@@ -163,21 +156,19 @@ public class SignerTest extends TestJars {
     ReportWriter error = this.createNewReportWriter(SignerTest.UNSIGNED_FILENAME);
     try {
       final Function1<PlainCheckReport, Boolean> _function = (PlainCheckReport it) -> {
-        String _iuType = it.getIuType();
-        return Boolean.valueOf(_iuType.equals("feature"));
+        return Boolean.valueOf(it.getIuType().equals("feature"));
       };
-      Iterable<PlainCheckReport> _filter = IterableExtensions.<PlainCheckReport>filter(reports, _function);
-      final int featuresCount = IterableExtensions.size(_filter);
+      final int featuresCount = IterableExtensions.size(IterableExtensions.<PlainCheckReport>filter(reports, _function));
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("Jars checked: ");
       int _size = reports.size();
-      _builder.append(_size, "");
+      _builder.append(_size);
       _builder.append(". ");
-      _builder.append(featuresCount, "");
+      _builder.append(featuresCount);
       _builder.append(" features and ");
       int _size_1 = reports.size();
       int _minus = (_size_1 - featuresCount);
-      _builder.append(_minus, "");
+      _builder.append(_minus);
       _builder.append(" plugins.");
       _builder.newLineIfNotEmpty();
       _builder.append("Valid signatures: ");
@@ -185,9 +176,8 @@ public class SignerTest extends TestJars {
         ReportType _type = it.getType();
         return Boolean.valueOf(Objects.equal(_type, ReportType.INFO));
       };
-      Iterable<PlainCheckReport> _filter_1 = IterableExtensions.<PlainCheckReport>filter(reports, _function_1);
-      int _size_2 = IterableExtensions.size(_filter_1);
-      _builder.append(_size_2, "");
+      int _size_2 = IterableExtensions.size(IterableExtensions.<PlainCheckReport>filter(reports, _function_1));
+      _builder.append(_size_2);
       _builder.append(".");
       _builder.newLineIfNotEmpty();
       _builder.append("Explicitly excluded from signing: ");
@@ -195,11 +185,10 @@ public class SignerTest extends TestJars {
         ReportType _type = it.getType();
         return Boolean.valueOf(Objects.equal(_type, ReportType.BAD_GUY));
       };
-      Iterable<PlainCheckReport> _filter_2 = IterableExtensions.<PlainCheckReport>filter(reports, _function_2);
-      int _size_3 = IterableExtensions.size(_filter_2);
-      _builder.append(_size_3, "");
+      int _size_3 = IterableExtensions.size(IterableExtensions.<PlainCheckReport>filter(reports, _function_2));
+      _builder.append(_size_3);
       _builder.append(". See ");
-      _builder.append(SignerTest.KNOWN_UNSIGNED, "");
+      _builder.append(SignerTest.KNOWN_UNSIGNED);
       _builder.append(" for more details.");
       _builder.newLineIfNotEmpty();
       _builder.append("Invalid or missing signature: ");
@@ -207,44 +196,37 @@ public class SignerTest extends TestJars {
         ReportType _type = it.getType();
         return Boolean.valueOf(Objects.equal(_type, ReportType.NOT_IN_TRAIN));
       };
-      Iterable<PlainCheckReport> _filter_3 = IterableExtensions.<PlainCheckReport>filter(reports, _function_3);
-      int _size_4 = IterableExtensions.size(_filter_3);
-      _builder.append(_size_4, "");
+      int _size_4 = IterableExtensions.size(IterableExtensions.<PlainCheckReport>filter(reports, _function_3));
+      _builder.append(_size_4);
       _builder.append(". See ");
-      _builder.append(SignerTest.UNSIGNED_FILENAME, "");
+      _builder.append(SignerTest.UNSIGNED_FILENAME);
       _builder.append(" for more details.");
       _builder.newLineIfNotEmpty();
       info.writeln(_builder);
       final Function1<PlainCheckReport, Integer> _function_4 = (PlainCheckReport it) -> {
-        String _fileName = it.getFileName();
-        return Integer.valueOf(_fileName.length());
+        return Integer.valueOf(it.getFileName().length());
       };
-      List<PlainCheckReport> _sortBy = IterableExtensions.<PlainCheckReport, Integer>sortBy(reports, _function_4);
-      PlainCheckReport _last = IterableExtensions.<PlainCheckReport>last(_sortBy);
-      String _fileName = _last.getFileName();
-      final int longestFileName = _fileName.length();
+      final int longestFileName = IterableExtensions.<PlainCheckReport>last(IterableExtensions.<PlainCheckReport, Integer>sortBy(reports, _function_4)).getFileName().length();
       final Function1<PlainCheckReport, String> _function_5 = (PlainCheckReport it) -> {
         return it.getFileName();
       };
-      List<PlainCheckReport> _sortBy_1 = IterableExtensions.<PlainCheckReport, String>sortBy(reports, _function_5);
-      for (final PlainCheckReport report : _sortBy_1) {
+      List<PlainCheckReport> _sortBy = IterableExtensions.<PlainCheckReport, String>sortBy(reports, _function_5);
+      for (final PlainCheckReport report : _sortBy) {
         {
-          String _fileName_1 = report.getFileName();
-          int _length = _fileName_1.length();
+          int _length = report.getFileName().length();
           int _minus_1 = (longestFileName - _length);
           final String indent = Strings.repeat(" ", _minus_1);
-          String _iuType = report.getIuType();
-          int _length_1 = _iuType.length();
+          int _length_1 = report.getIuType().length();
           int _minus_2 = (10 - _length_1);
           final String trailing = Strings.repeat(" ", _minus_2);
           StringConcatenation _builder_1 = new StringConcatenation();
           _builder_1.append(" ");
-          String _fileName_2 = report.getFileName();
-          _builder_1.append(_fileName_2, " ");
+          String _fileName = report.getFileName();
+          _builder_1.append(_fileName, " ");
           _builder_1.append(indent, " ");
           _builder_1.append("\t");
-          String _iuType_1 = report.getIuType();
-          _builder_1.append(_iuType_1, " ");
+          String _iuType = report.getIuType();
+          _builder_1.append(_iuType, " ");
           _builder_1.append(trailing, " ");
           _builder_1.append("\t");
           String _checkResult = report.getCheckResult();
@@ -281,9 +263,9 @@ public class SignerTest extends TestJars {
   protected ReportWriter createNewReportWriter(final String filename) {
     StringConcatenation _builder = new StringConcatenation();
     String _reportOutputDirectory = this.getReportOutputDirectory();
-    _builder.append(_reportOutputDirectory, "");
+    _builder.append(_reportOutputDirectory);
     _builder.append("/");
-    _builder.append(filename, "");
+    _builder.append(filename);
     return new ReportWriter(_builder.toString());
   }
 }

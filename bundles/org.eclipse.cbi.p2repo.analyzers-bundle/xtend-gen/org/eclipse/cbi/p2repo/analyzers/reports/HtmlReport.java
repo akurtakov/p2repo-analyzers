@@ -12,7 +12,6 @@ import java.io.PrintWriter;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import org.eclipse.cbi.p2repo.analyzers.common.CheckReport;
 import org.eclipse.cbi.p2repo.analyzers.common.ReportType;
@@ -20,7 +19,6 @@ import org.eclipse.cbi.p2repo.analyzers.common.reporter.CheckReportsManager;
 import org.eclipse.cbi.p2repo.analyzers.common.reporter.ICheckReporter;
 import org.eclipse.cbi.p2repo.analyzers.common.reporter.IP2RepositoryAnalyserConfiguration;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
-import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -52,13 +50,13 @@ public class HtmlReport implements ICheckReporter {
       _builder.append("<head>");
       _builder.newLine();
       _builder.append("<link rel=\"stylesheet\" href=\"./data/");
-      _builder.append(this.cssFileName, "");
+      _builder.append(this.cssFileName);
       _builder.append("\"/>");
       _builder.newLineIfNotEmpty();
       _builder.append("<script src=\"http://code.jquery.com/jquery-1.11.3.min.js\"></script>");
       _builder.newLine();
       _builder.append("<script src=\"./data/");
-      _builder.append(this.jsFileName, "");
+      _builder.append(this.jsFileName);
       _builder.append("\"></script>");
       _builder.newLineIfNotEmpty();
       _builder.append("</head>");
@@ -91,8 +89,7 @@ public class HtmlReport implements ICheckReporter {
       _builder.append("</html>");
       _builder.newLine();
       final String xmlContent = _builder.toString();
-      PrintWriter _append = writer.append(xmlContent);
-      _append.close();
+      writer.append(xmlContent).close();
       String _warningsHtmlLocation = this.warningsHtmlLocation(configs);
       final PrintWriter warnWriter = new PrintWriter(_warningsHtmlLocation);
       StringConcatenation _builder_1 = new StringConcatenation();
@@ -101,13 +98,13 @@ public class HtmlReport implements ICheckReporter {
       _builder_1.append("<head>");
       _builder_1.newLine();
       _builder_1.append("<link rel=\"stylesheet\" href=\"./data/");
-      _builder_1.append(this.cssFileName, "");
+      _builder_1.append(this.cssFileName);
       _builder_1.append("\"/>");
       _builder_1.newLineIfNotEmpty();
       _builder_1.append("<script src=\"http://code.jquery.com/jquery-1.11.3.min.js\"></script>");
       _builder_1.newLine();
       _builder_1.append("<script src=\"./data/");
-      _builder_1.append(this.jsFileName, "");
+      _builder_1.append(this.jsFileName);
       _builder_1.append("\"></script>");
       _builder_1.newLineIfNotEmpty();
       _builder_1.append("</head>");
@@ -132,8 +129,7 @@ public class HtmlReport implements ICheckReporter {
       _builder_1.append("</html>");
       _builder_1.newLine();
       final String warnContent = _builder_1.toString();
-      PrintWriter _append_1 = warnWriter.append(warnContent);
-      _append_1.close();
+      warnWriter.append(warnContent).close();
       this.addCssFile(configs);
       this.addJsFile(configs);
     } catch (Throwable _e) {
@@ -144,18 +140,18 @@ public class HtmlReport implements ICheckReporter {
   public String errorsHtmlLocation(final IP2RepositoryAnalyserConfiguration configs) {
     StringConcatenation _builder = new StringConcatenation();
     String _reportOutputDir = configs.getReportOutputDir();
-    _builder.append(_reportOutputDir, "");
+    _builder.append(_reportOutputDir);
     _builder.append("/");
-    _builder.append(this.errorsFileName, "");
+    _builder.append(this.errorsFileName);
     return _builder.toString();
   }
   
   public String warningsHtmlLocation(final IP2RepositoryAnalyserConfiguration configs) {
     StringConcatenation _builder = new StringConcatenation();
     String _reportOutputDir = configs.getReportOutputDir();
-    _builder.append(_reportOutputDir, "");
+    _builder.append(_reportOutputDir);
     _builder.append("/");
-    _builder.append(this.warningsFileName, "");
+    _builder.append(this.warningsFileName);
     return _builder.toString();
   }
   
@@ -163,7 +159,7 @@ public class HtmlReport implements ICheckReporter {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<h3>Check results for the repository: ");
     URI _reportRepoURI = conf.getReportRepoURI();
-    _builder.append(_reportRepoURI, "");
+    _builder.append(_reportRepoURI);
     _builder.append("</h3>");
     _builder.newLineIfNotEmpty();
     return _builder;
@@ -182,25 +178,23 @@ public class HtmlReport implements ICheckReporter {
     final Function1<CheckReport, String> _function_2 = (CheckReport it) -> {
       return it.getCheckerId();
     };
-    Iterable<String> _map = IterableExtensions.<CheckReport, String>map(allreports, _function_2);
-    Set<String> _set = IterableExtensions.<String>toSet(_map);
-    final List<String> checkerIds = IterableExtensions.<String>sort(_set);
+    final List<String> checkerIds = IterableExtensions.<String>sort(IterableExtensions.<String>toSet(IterableExtensions.<CheckReport, String>map(allreports, _function_2)));
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<h3 class=\"");
     String _asCssClass = this.asCssClass(reportType);
-    _builder.append(_asCssClass, "");
+    _builder.append(_asCssClass);
     _builder.append("\">Installation units with ");
     String _asHeaderTitle = this.asHeaderTitle(reportType);
-    _builder.append(_asHeaderTitle, "");
+    _builder.append(_asHeaderTitle);
     _builder.append("s (");
     int _size = IterableExtensions.size(reports);
-    _builder.append(_size, "");
+    _builder.append(_size);
     _builder.append(")</h3>");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("<table id=\"table_");
     String _asCssClass_1 = this.asCssClass(reportType);
-    _builder.append(_asCssClass_1, "");
+    _builder.append(_asCssClass_1);
     _builder.append("\">");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -251,11 +245,10 @@ public class HtmlReport implements ICheckReporter {
     _builder.append("<tbody>");
     _builder.newLine();
     {
-      Set<IInstallableUnit> _keySet = groupbyIU.keySet();
       final Function1<IInstallableUnit, String> _function_3 = (IInstallableUnit it) -> {
         return it.getId();
       };
-      List<IInstallableUnit> _sortBy = IterableExtensions.<IInstallableUnit, String>sortBy(_keySet, _function_3);
+      List<IInstallableUnit> _sortBy = IterableExtensions.<IInstallableUnit, String>sortBy(groupbyIU.keySet(), _function_3);
       for(final IInstallableUnit iu : _sortBy) {
         _builder.append("\t");
         final Function1<CheckReport, Boolean> _function_4 = (CheckReport it) -> {
@@ -269,8 +262,7 @@ public class HtmlReport implements ICheckReporter {
         String _id = iu.getId();
         _builder.append(_id, "\t");
         _builder.append("_");
-        Version _version = iu.getVersion();
-        String _original = _version.getOriginal();
+        String _original = iu.getVersion().getOriginal();
         _builder.append(_original, "\t");
         _builder.append("\">");
         _builder.newLineIfNotEmpty();
@@ -284,8 +276,7 @@ public class HtmlReport implements ICheckReporter {
         _builder.append("\t");
         _builder.append("\t");
         _builder.append("<td>");
-        Version _version_1 = iu.getVersion();
-        String _original_1 = _version_1.getOriginal();
+        String _original_1 = iu.getVersion().getOriginal();
         _builder.append(_original_1, "\t\t");
         _builder.append("</td>");
         _builder.newLineIfNotEmpty();
@@ -297,8 +288,7 @@ public class HtmlReport implements ICheckReporter {
               String _checkerId = it.getCheckerId();
               return Boolean.valueOf(Objects.equal(_checkerId, checker_1));
             };
-            Iterable<CheckReport> _filter = IterableExtensions.<CheckReport>filter(iuReports, _function_5);
-            final CheckReport report = IterableExtensions.<CheckReport>head(_filter);
+            final CheckReport report = IterableExtensions.<CheckReport>head(IterableExtensions.<CheckReport>filter(iuReports, _function_5));
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("\t");
@@ -345,9 +335,9 @@ public class HtmlReport implements ICheckReporter {
     try {
       StringConcatenation _builder = new StringConcatenation();
       String _dataOutputDir = configs.getDataOutputDir();
-      _builder.append(_dataOutputDir, "");
+      _builder.append(_dataOutputDir);
       _builder.append("/");
-      _builder.append(this.jsFileName, "");
+      _builder.append(this.jsFileName);
       final PrintWriter writer = new PrintWriter(_builder.toString());
       final ReportType[] types = ReportType.values();
       for (final ReportType type : types) {
@@ -401,9 +391,9 @@ public class HtmlReport implements ICheckReporter {
     try {
       StringConcatenation _builder = new StringConcatenation();
       String _dataOutputDir = configs.getDataOutputDir();
-      _builder.append(_dataOutputDir, "");
+      _builder.append(_dataOutputDir);
       _builder.append("/");
-      _builder.append(this.cssFileName, "");
+      _builder.append(this.cssFileName);
       final PrintWriter writer = new PrintWriter(_builder.toString());
       StringConcatenation _builder_1 = new StringConcatenation();
       _builder_1.append("table {");
@@ -436,7 +426,7 @@ public class HtmlReport implements ICheckReporter {
         StringConcatenation _builder_2 = new StringConcatenation();
         _builder_2.append(".");
         String _asCssClass = this.asCssClass(type);
-        _builder_2.append(_asCssClass, "");
+        _builder_2.append(_asCssClass);
         _builder_2.append(" {");
         _builder_2.newLineIfNotEmpty();
         _builder_2.append("\t");
@@ -484,12 +474,10 @@ public class HtmlReport implements ICheckReporter {
   public String asCssClass(final CheckReport report) {
     String _xblockexpression = null;
     {
-      boolean _equals = Objects.equal(report, null);
-      if (_equals) {
+      if ((report == null)) {
         return "skipped_check";
       }
-      ReportType _type = report.getType();
-      _xblockexpression = this.asCssClass(_type);
+      _xblockexpression = this.asCssClass(report.getType());
     }
     return _xblockexpression;
   }
@@ -543,46 +531,35 @@ public class HtmlReport implements ICheckReporter {
   public String abbreviation(final String string) {
     String simpleName = string;
     final int dotIndex = string.lastIndexOf(".");
-    boolean _and = false;
-    if (!(dotIndex >= 0)) {
-      _and = false;
-    } else {
-      int _length = string.length();
-      boolean _lessThan = (dotIndex < _length);
-      _and = _lessThan;
-    }
-    if (_and) {
-      String _substring = string.substring((dotIndex + 1));
-      simpleName = _substring;
+    if (((dotIndex >= 0) && (dotIndex < string.length()))) {
+      simpleName = string.substring((dotIndex + 1));
     }
     return simpleName.replaceAll("([A-Z]+)((?![A-Z])\\w)+", "$1");
   }
   
   public String asDescription(final CheckReport report) {
-    boolean _equals = Objects.equal(report, null);
-    if (_equals) {
+    if ((report == null)) {
       return "any reports";
     } else {
       String _xifexpression = null;
       String _checkResult = report.getCheckResult();
-      boolean _equals_1 = Objects.equal(_checkResult, null);
-      if (_equals_1) {
+      boolean _tripleEquals = (_checkResult == null);
+      if (_tripleEquals) {
         _xifexpression = "null";
       } else {
         _xifexpression = report.getCheckResult();
       }
       final String result = _xifexpression;
       StringConcatenation _builder = new StringConcatenation();
-      _builder.append(result, "");
+      _builder.append(result);
       String _xifexpression_1 = null;
-      String _additionalData = report.getAdditionalData();
-      boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(_additionalData);
+      boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(report.getAdditionalData());
       boolean _not = (!_isNullOrEmpty);
       if (_not) {
-        String _additionalData_1 = report.getAdditionalData();
-        _xifexpression_1 = (" - " + _additionalData_1);
+        String _additionalData = report.getAdditionalData();
+        _xifexpression_1 = (" - " + _additionalData);
       }
-      _builder.append(_xifexpression_1, "");
+      _builder.append(_xifexpression_1);
       return _builder.toString();
     }
   }
@@ -590,8 +567,7 @@ public class HtmlReport implements ICheckReporter {
   public String asStatus(final CheckReport report) {
     String _xblockexpression = null;
     {
-      boolean _equals = Objects.equal(report, null);
-      if (_equals) {
+      if ((report == null)) {
         return "&nbsp;";
       }
       String _switchResult = null;
